@@ -4,13 +4,14 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAppDispatch } from '../../app/hooks';
 import { deleteDishThunk } from '../../store/dishesThunk';
+import { NavLink } from 'react-router-dom';
 
 interface Props {
   dish:IDishState;
 }
 
 const Dish:React.FC<Props> = ({dish}) => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   return (
     <Paper elevation={4}>
       <Box component="div" display="flex" justifyContent="space-between" alignItems="center" padding={1}>
@@ -24,7 +25,11 @@ const Dish:React.FC<Props> = ({dish}) => {
           <strong>{dish.price} KGS</strong>
         </Typography>
         <Box component="div" className="d-flex gap-3">
-          <Button color={'primary'} variant="contained">Edit<EditNoteIcon/></Button>
+          <NavLink to={`/addDish/${dish.id}`}>
+            <Button color={'primary'} variant="contained">
+              Edit<EditNoteIcon/>
+            </Button>
+          </NavLink>
           <Button
             onClick={()=>dispatch(deleteDishThunk(dish))}
             color={'error'} variant="contained">Delete<DeleteIcon/></Button>

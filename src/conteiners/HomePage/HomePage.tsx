@@ -5,7 +5,6 @@ import Dishes from '../../components/Dishes/Dishes';
 
 
 const HomePage = () => {
-
   return (
     <div className="bg-dark p-3 rounded">
       <Box

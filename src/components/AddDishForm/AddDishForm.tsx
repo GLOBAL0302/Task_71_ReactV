@@ -1,18 +1,35 @@
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import FastbootIcon from '@mui/icons-material/Fastfood';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import { IDishInput } from '../../types';
+import { IDishInput, IDishState } from '../../types';
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../app/hooks';
-import { createDish } from '../../store/dishesThunk';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { createDish, editDishThunk } from '../../store/dishesThunk';
+import { useParams } from 'react-router-dom';
+import { selectDishes } from '../../store/dishesSlice';
 
+interface Props {
+  selectedDish?: IDishState;
+}
 
-const AddDishForm = () => {
-  const initialState:IDishInput = {
+const AddDishForm:React.FC<Props> = ({}) => {
+  let initialState:IDishInput = {
     title: "",
     price:"",
     image:""
   };
+
+  const {id:dishId } = useParams();
+  if(dishId){
+    const selectedDish = useAppSelector(selectDishes).find(dish => dish.id === dishId);
+    if(selectedDish){
+      initialState = {
+        title:selectedDish?.title,
+        price:selectedDish?.price,
+        image:selectedDish?.image,
+      };
+    }
+  }
 
   const dispatch = useAppDispatch();
 
@@ -28,7 +45,11 @@ const AddDishForm = () => {
 
   const onSubmit = (e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
-    dispatch(createDish(userInput));
+    if (dishId){
+      dispatch(editDishThunk({...userInput, id:dishId}))
+    }else {
+      dispatch(createDish(userInput));
+    }
   };
 
   return (
@@ -42,13 +63,14 @@ const AddDishForm = () => {
       direction={'column'}
     >
       <Grid item>
-        <Typography variant="h5" component="span" gutterBottom>
-          Add Dish
+        <Typography variant="h3" component="span" color="textSecondary">
+          {dishId? "Edit":"Create Dish"}
         </Typography>
-        <FastbootIcon />
+        <FastbootIcon sx={{color:"black"}}/>
       </Grid>
       <Grid item>
         <TextField
+          value={userInput.title}
           onChange={onChange}
           fullWidth
           required
@@ -61,6 +83,7 @@ const AddDishForm = () => {
       </Grid>
       <Grid item>
         <TextField
+          value={userInput.price}
           onChange={onChange}
           fullWidth
           required
@@ -73,6 +96,7 @@ const AddDishForm = () => {
       </Grid>
       <Grid item>
         <TextField
+          value={userInput.image}
           onChange={onChange}
           fullWidth
           required
@@ -88,7 +112,7 @@ const AddDishForm = () => {
           color="success"
           className="ms-auto"
           variant="contained" >
-          Add<ControlPointIcon/>
+          {dishId?"Save" :"Add"}<ControlPointIcon/>
         </Button>
       </Box>
     </Grid>

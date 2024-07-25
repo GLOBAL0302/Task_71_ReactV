@@ -4,7 +4,6 @@ import AddDishForm from './components/AddDishForm/AddDishForm';
 import { Route, Routes } from 'react-router-dom';
 import HomePage from './conteiners/HomePage/HomePage';
 
-
 const App = () => {
   return (
     <div className="container">

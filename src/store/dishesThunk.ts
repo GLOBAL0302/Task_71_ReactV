@@ -32,3 +32,12 @@ export const deleteDishThunk = createAsyncThunk<void, IDishState, {state:RootSta
     await axiosApi.delete(`/dishes/${dish.id}.json`);
   }
 );
+
+export const editDishThunk = createAsyncThunk<void, IDishState, {state:RootState}>(
+  "dishes/editDish",
+  async(dish)=>{
+    const changedDish = {title: dish.title, price: dish.price, image: dish.image};
+    await axiosApi.put(`/dishes/${dish.id}.json`, changedDish);
+  }
+);
+
