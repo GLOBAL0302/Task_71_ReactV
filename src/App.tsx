@@ -11,7 +11,8 @@ const App = () => {
       <NavBar />
       <Routes>
         <Route path="/admin" element={<HomePage/>}/>
-        <Route path="/addDish"  element={<AddDishForm/>} />
+        <Route path="/addDish"  element={<AddDishForm/>}/>
+        <Route path="/addDish/:id"  element={<AddDishForm/>}/>
       </Routes>
     </div>
   );

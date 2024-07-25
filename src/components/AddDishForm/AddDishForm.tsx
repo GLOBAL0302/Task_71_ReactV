@@ -14,7 +14,7 @@ const AddDishForm = () => {
     image:""
   };
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const [userInput, setUserInput] = useState<IDishInput>(initialState);
 

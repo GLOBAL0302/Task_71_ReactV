@@ -1,9 +1,11 @@
 import { Box, Button, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
+import Dishes from '../../components/Dishes/Dishes';
 
 
 const HomePage = () => {
+
   return (
     <div className="bg-dark p-3 rounded">
       <Box
@@ -20,6 +22,9 @@ const HomePage = () => {
             <FastfoodIcon/>
           </NavLink>
         </Button>
+      </Box>
+      <Box component="div">
+        <Dishes/>
       </Box>
     </div>
   );
