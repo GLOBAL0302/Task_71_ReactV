@@ -2,5 +2,10 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  color: white;
+}
+body {
+  background: url('https://img.freepik.com/free-vector/restaurant-mural-wallpaper_23-2148704190.jpg?t=st=1721905700~exp=1721909300~hmac=3dbad308077ee112845fbbea8083bcb84c06347b946b6c425f1d5ec0217bb107&w=1380')
+    no-repeat top center/cover;
+  height: 100vh;
 }
