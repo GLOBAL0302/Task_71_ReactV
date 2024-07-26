@@ -8,9 +8,11 @@ import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { Box, Divider, Typography } from '@mui/material';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectCheckOutDishes } from '../../store/dishesSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { IOrderInfo } from '../../types';
+import { submitOrdersThunks } from '../../store/dishesThunk';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -28,12 +30,22 @@ interface Props {
 
 const CheckOut: React.FC<Props> = ({ open, setOpen }) => {
   const cartDishes = useAppSelector(selectCheckOutDishes);
+  const dispatch = useAppDispatch();
   const checkOutDish = cartDishes.filter(
     (value, index) => cartDishes.indexOf(value) === index,
   );
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const completeOrder = ()=>{
+    const allCartItems = checkOutDish.reduce<IOrderInfo>((acc, item)=>{
+       acc[item.dish.id] = item.amount;
+      return acc;
+    }, {});
+    dispatch(submitOrdersThunks(allCartItems));
+    handleClose();
   };
 
   const total = cartDishes.reduce((acc, dish) => {
@@ -85,7 +97,7 @@ const CheckOut: React.FC<Props> = ({ open, setOpen }) => {
               Cancel
               <CancelIcon />
             </Button>
-            <Button variant="outlined" onClick={handleClose}>
+            <Button variant="outlined" onClick={completeOrder}>
               Order
               <DeliveryDiningIcon />
             </Button>

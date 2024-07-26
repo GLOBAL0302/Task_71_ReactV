@@ -7,10 +7,10 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
       <div className="container-fluid">
-        <NavLink to="#" className="navbar-brand">
+        <NavLink to={location==="/csOrders" || location === "/admin"  || location =="/addDish"? "/admin" : "/"} className="navbar-brand">
           <LocalPizzaIcon /> PizzaHut
         </NavLink>
-        {location === '/admin' && (
+        {(location === '/admin' || location == "/csOrders") && (
           <div className="" id="navbarNav">
             <ul className="navbar-nav d-flex gap-5">
               <li className="nav-item">
@@ -23,9 +23,9 @@ const NavBar = () => {
               </li>
               <span className="border border-1"></span>
               <li>
-                <a href="#" className="text-white text-decoration-none">
+                <NavLink to="/csOrders" className="text-white text-decoration-none">
                   Orders
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>

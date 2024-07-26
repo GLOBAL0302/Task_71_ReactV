@@ -1,16 +1,18 @@
-import { ICartDishes, IDishState } from '../types';
+import { IAllOrders, ICartDishes, IDishState } from '../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchDishes } from './dishesThunk';
+import { fetchCsOrders, fetchDishes, submitOrdersThunks } from './dishesThunk';
 
 export interface DishesState {
   dishes: IDishState[];
   checkOutDishes: ICartDishes[];
+  allOrders:IAllOrders[],
   fetchLoading: boolean;
 }
 
 const initialState: DishesState = {
   dishes: [],
   checkOutDishes: [],
+  allOrders:[],
   fetchLoading: false,
 };
 
@@ -41,13 +43,30 @@ export const dishesSlice = createSlice({
         state.dishes = payload;
         state.fetchLoading = false;
       });
+
+    builder
+      .addCase(submitOrdersThunks.pending , state => {
+
+      })
+      .addCase(submitOrdersThunks.fulfilled, (state) => {
+        state.checkOutDishes = [];
+      });
+
+    builder
+      .addCase(fetchCsOrders.pending, (state, { payload }) => {
+
+      })
+      .addCase(fetchCsOrders.fulfilled, (state, { payload }) => {
+        state.allOrders = payload;
+      });
   },
   selectors: {
     selectDishes: (state) => state.dishes,
     selectCheckOutDishes: (state) => state.checkOutDishes,
+    selectAllOrders:state => state.allOrders,
   },
 });
 
 export const dishesReducer = dishesSlice.reducer;
 export const { addToCart } = dishesSlice.actions;
-export const { selectDishes, selectCheckOutDishes } = dishesSlice.selectors;
+export const { selectDishes, selectCheckOutDishes,selectAllOrders } = dishesSlice.selectors;
