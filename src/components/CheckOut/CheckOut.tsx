@@ -10,6 +10,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import { Box, Divider, Typography } from '@mui/material';
 import { useAppSelector } from '../../app/hooks';
 import { selectCheckOutDishes } from '../../store/dishesSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -20,22 +21,23 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
-
 interface Props {
-  open:boolean,
-  setOpen:(value:boolean) => void,
+  open: boolean;
+  setOpen: (value: boolean) => void;
 }
 
-const CheckOut:React.FC<Props> = ({open, setOpen}) => {
+const CheckOut: React.FC<Props> = ({ open, setOpen }) => {
   const cartDishes = useAppSelector(selectCheckOutDishes);
-  const checkOutDish = cartDishes.filter((value, index)=> cartDishes.indexOf(value) === index);
+  const checkOutDish = cartDishes.filter(
+    (value, index) => cartDishes.indexOf(value) === index,
+  );
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const total = cartDishes.reduce((acc, dish)=>{
-    return (acc + (dish.amount * parseFloat(dish.dish.price)));
+  const total = cartDishes.reduce((acc, dish) => {
+    return acc + dish.amount * parseFloat(dish.dish.price);
   }, 0);
   return (
     <Box bgcolor="white">
@@ -46,30 +48,47 @@ const CheckOut:React.FC<Props> = ({open, setOpen}) => {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <Box
-          paddingY={2}
-          width="400px"
-          component="div">
-          <Divider><Typography component="h5" variant="h5">
-            Your Order
-          </Typography></Divider>
+        <Box paddingY={2} width="400px" component="div">
+          <Divider>
+            <Typography component="h5" variant="h5">
+              Your Order
+            </Typography>
+          </Divider>
           <DialogContent>
             {checkOutDish.map((dish) => (
               <div
                 className="d-flex align-items-center justify-content-between"
                 key={dish.dish.id}
               >
-                <Typography component='p' variant="body1">{dish.dish.title}</Typography>
-                <Typography component='p' variant="body2">x{dish.amount}</Typography>
-                <Typography component='p' variant="body2">{dish.dish.price} KGS</Typography>
-                <Typography component='p' variant="body2">= {dish.amount * parseInt(dish.dish.price)} KGS</Typography>
+                <Typography component="p" variant="body1">
+                  {dish.dish.title}
+                </Typography>
+                <Typography component="p" variant="body2">
+                  x{dish.amount}
+                </Typography>
+                <Typography component="p" variant="body2">
+                  {dish.dish.price} KGS
+                </Typography>
+                <Typography component="p" variant="body2">
+                  = {dish.amount * parseInt(dish.dish.price)} KGS
+                </Typography>
+                <DeleteIcon color="error" />
               </div>
             ))}
-            <Typography textAlign="right" component="h3" variant="body1"><strong>Total:{total}</strong></Typography>
+            <Typography textAlign="right" component="h3" variant="body1">
+              <strong>Total:</strong>{' '}
+              <span className="text-decoration-underline">{total} KGS</span>
+            </Typography>
           </DialogContent>
           <DialogActions>
-            <Button variant="contained" color="error" onClick={handleClose}>Cancel<CancelIcon/></Button>
-            <Button variant="outlined" onClick={handleClose}>Order<DeliveryDiningIcon/></Button>
+            <Button variant="contained" color="error" onClick={handleClose}>
+              Cancel
+              <CancelIcon />
+            </Button>
+            <Button variant="outlined" onClick={handleClose}>
+              Order
+              <DeliveryDiningIcon />
+            </Button>
           </DialogActions>
         </Box>
       </Dialog>

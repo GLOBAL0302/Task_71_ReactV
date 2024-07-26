@@ -3,50 +3,51 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchDishes } from './dishesThunk';
 
 export interface DishesState {
-  dishes:IDishState[]
-  checkOutDishes: ICartDishes[]
-  fetchLoading:boolean
+  dishes: IDishState[];
+  checkOutDishes: ICartDishes[];
+  fetchLoading: boolean;
 }
 
 const initialState: DishesState = {
-  dishes:[],
-  checkOutDishes:[],
-  fetchLoading:false,
+  dishes: [],
+  checkOutDishes: [],
+  fetchLoading: false,
 };
 
 export const dishesSlice = createSlice({
-  name:"dishes",
+  name: 'dishes',
   initialState,
-  reducers:{
-    addToCart: (state,{payload})=>{
-      const index = state.checkOutDishes.findIndex((item)=>item.dish.id === payload.id);
-      if(index !== -1){
+  reducers: {
+    addToCart: (state, { payload }) => {
+      const index = state.checkOutDishes.findIndex(
+        (item) => item.dish.id === payload.id,
+      );
+      if (index !== -1) {
         state.checkOutDishes[index].amount++;
-      }else{
+      } else {
         state.checkOutDishes.push({
-          amount:1,
-          dish: payload
+          amount: 1,
+          dish: payload,
         });
       }
-    }
+    },
   },
-  extraReducers:(builder)=>{
+  extraReducers: (builder) => {
     builder
       .addCase(fetchDishes.pending, (state) => {
         state.fetchLoading = true;
       })
-      .addCase(fetchDishes.fulfilled, (state, {payload}) =>{
-       state.dishes = payload;
-       state.fetchLoading = false;
+      .addCase(fetchDishes.fulfilled, (state, { payload }) => {
+        state.dishes = payload;
+        state.fetchLoading = false;
       });
   },
-  selectors:{
-    selectDishes:(state)=> state.dishes,
-    selectCheckOutDishes: (state)=> state.checkOutDishes
-  }
+  selectors: {
+    selectDishes: (state) => state.dishes,
+    selectCheckOutDishes: (state) => state.checkOutDishes,
+  },
 });
 
-
 export const dishesReducer = dishesSlice.reducer;
-export const {addToCart}= dishesSlice.actions;
-export const {selectDishes, selectCheckOutDishes} = dishesSlice.selectors;
+export const { addToCart } = dishesSlice.actions;
+export const { selectDishes, selectCheckOutDishes } = dishesSlice.selectors;

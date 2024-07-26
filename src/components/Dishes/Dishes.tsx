@@ -12,27 +12,23 @@ const Dishes = () => {
   const dishes = useAppSelector(selectDishes);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-
   useEffect(() => {
     dispatch(fetchDishes());
   }, [dispatch]);
   return (
     <>
       {dishes.map((dish) => (
-        <Dish
-          key={dish.id}
-          dish={dish}
-        />
+        <Dish key={dish.id} dish={dish} />
       ))}
-      {isCartOpen && (<CheckOut open={isCartOpen} setOpen={setIsCartOpen} />)}
-      <Box
-        marginTop={2}
-        textAlign="right">
+      {isCartOpen && <CheckOut open={isCartOpen} setOpen={setIsCartOpen} />}
+      <Box marginTop={2} textAlign="right">
         <Button
-          onClick={()=>setIsCartOpen(true)}
+          onClick={() => setIsCartOpen(true)}
           variant="contained"
           color="primary"
-        >CheckOut<ShoppingCartCheckoutIcon/>
+        >
+          CheckOut
+          <ShoppingCartCheckoutIcon />
         </Button>
       </Box>
     </>

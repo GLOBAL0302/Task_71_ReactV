@@ -8,24 +8,24 @@ import { createDish, editDishThunk } from '../../store/dishesThunk';
 import { useParams } from 'react-router-dom';
 import { selectDishes } from '../../store/dishesSlice';
 
-
-
-const AddDishForm:React.FC = () => {
-  let initialState:IDishInput = {
-    title: "",
-    price:"",
-    image:""
+const AddDishForm: React.FC = () => {
+  let initialState: IDishInput = {
+    title: '',
+    price: '',
+    image: '',
   };
 
-  const {id:dishId } = useParams();
-  const selectedDish:IDishState | undefined = useAppSelector(selectDishes).find(dish => dish.id === dishId);
+  const { id: dishId } = useParams();
+  const selectedDish: IDishState | undefined = useAppSelector(
+    selectDishes,
+  ).find((dish) => dish.id === dishId);
 
-  if(dishId){
-    if(selectedDish){
+  if (dishId) {
+    if (selectedDish) {
       initialState = {
-        title:selectedDish?.title,
-        price:selectedDish?.price,
-        image:selectedDish?.image,
+        title: selectedDish?.title,
+        price: selectedDish?.price,
+        image: selectedDish?.image,
       };
     }
   }
@@ -34,19 +34,19 @@ const AddDishForm:React.FC = () => {
 
   const [userInput, setUserInput] = useState<IDishInput>(initialState);
 
-  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setUserInput(prevState=>({
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserInput((prevState) => ({
       ...prevState,
-      [name]:value
+      [name]: value,
     }));
   };
 
-  const onSubmit = (e:React.FormEvent<HTMLFormElement>)=>{
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (dishId){
-      dispatch(editDishThunk({...userInput, id:dishId}));
-    }else {
+    if (dishId) {
+      dispatch(editDishThunk({ ...userInput, id: dishId }));
+    } else {
       dispatch(createDish(userInput));
     }
   };
@@ -63,9 +63,9 @@ const AddDishForm:React.FC = () => {
     >
       <Grid item>
         <Typography variant="h3" component="span" color="textSecondary">
-          {dishId? "Edit":"Create Dish"}
+          {dishId ? 'Edit' : 'Create Dish'}
         </Typography>
-        <FastbootIcon sx={{color:"black"}}/>
+        <FastbootIcon sx={{ color: 'black' }} />
       </Grid>
       <Grid item>
         <TextField
@@ -103,15 +103,18 @@ const AddDishForm:React.FC = () => {
           name="image"
           id="image"
           label="Image"
-          variant="filled" />
+          variant="filled"
+        />
       </Grid>
       <Box className="d-flex">
         <Button
           type="submit"
           color="success"
           className="ms-auto"
-          variant="contained" >
-          {dishId?"Save" :"Add"}<ControlPointIcon/>
+          variant="contained"
+        >
+          {dishId ? 'Save' : 'Add'}
+          <ControlPointIcon />
         </Button>
       </Box>
     </Grid>

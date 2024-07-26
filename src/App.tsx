@@ -10,11 +10,11 @@ const App = () => {
     <div className="container">
       <NavBar />
       <Routes>
-        <Route path="/" element={<HomePage/>} />
-        <Route path="/admin" element={<HomePage/>}/>
-        <Route path="/addDish"  element={<AddDishForm/>}/>
-        <Route path="/addDish/:id"  element={<AddDishForm/>}/>
-        <Route path="*" element={<NotFoundPage/>}/>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<HomePage />} />
+        <Route path="/addDish" element={<AddDishForm />} />
+        <Route path="/addDish/:id" element={<AddDishForm />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );
