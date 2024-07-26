@@ -1,14 +1,16 @@
 import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const NavBar = () => {
+  const {pathname:location} = useLocation();
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
       <div className="container-fluid">
         <NavLink to="#" className="navbar-brand">
           <LocalPizzaIcon /> PizzaHut
         </NavLink>
-        <div className="" id="navbarNav">
+        {location === '/admin' && (<div className="" id="navbarNav">
           <ul className="navbar-nav d-flex gap-5">
             <li className="nav-item">
               <NavLink to="/admin" className="text-white text-decoration-none">
@@ -22,7 +24,7 @@ const NavBar = () => {
               </a>
             </li>
           </ul>
-        </div>
+        </div>)}
       </div>
     </nav>
   );

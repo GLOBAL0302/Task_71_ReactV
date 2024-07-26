@@ -8,11 +8,9 @@ import { createDish, editDishThunk } from '../../store/dishesThunk';
 import { useParams } from 'react-router-dom';
 import { selectDishes } from '../../store/dishesSlice';
 
-interface Props {
-  selectedDish?: IDishState;
-}
 
-const AddDishForm:React.FC<Props> = ({}) => {
+
+const AddDishForm:React.FC = () => {
   let initialState:IDishInput = {
     title: "",
     price:"",
@@ -20,8 +18,9 @@ const AddDishForm:React.FC<Props> = ({}) => {
   };
 
   const {id:dishId } = useParams();
+  const selectedDish:IDishState | undefined = useAppSelector(selectDishes).find(dish => dish.id === dishId);
+
   if(dishId){
-    const selectedDish = useAppSelector(selectDishes).find(dish => dish.id === dishId);
     if(selectedDish){
       initialState = {
         title:selectedDish?.title,
@@ -46,7 +45,7 @@ const AddDishForm:React.FC<Props> = ({}) => {
   const onSubmit = (e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
     if (dishId){
-      dispatch(editDishThunk({...userInput, id:dishId}))
+      dispatch(editDishThunk({...userInput, id:dishId}));
     }else {
       dispatch(createDish(userInput));
     }
