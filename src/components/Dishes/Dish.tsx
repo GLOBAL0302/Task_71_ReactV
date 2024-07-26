@@ -2,25 +2,20 @@ import { IDishState } from '../../types';
 import { Box, Button, Paper, Typography } from '@mui/material';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 import { deleteDishThunk } from '../../store/dishesThunk';
 import { NavLink, useLocation } from 'react-router-dom';
 
-import { addToCart, selectCheckOutDishes} from '../../store/dishesSlice';
+import { addToCart} from '../../store/dishesSlice';
 
 interface Props {
   dish:IDishState;
 }
 const Dish:React.FC<Props> = ({dish}) => {
-
-  const dispatch = useAppDispatch();
-  const cartDishes = useAppSelector(selectCheckOutDishes);
   const {pathname:location} = useLocation();
 
-  let amount = 0;
-  if (cartDishes.length > 0) {
-    amount = cartDishes.filter(item => item.id === dish.id).length;
-  }
+  const dispatch = useAppDispatch();
+
 
   return (
     <Paper elevation={6}>
@@ -29,12 +24,12 @@ const Dish:React.FC<Props> = ({dish}) => {
         component="div" display="flex" justifyContent="space-between" alignItems="center" padding={1}>
         <Box>
           <img
-            style={{maxHeight: "120px"}}
+            style={{maxHeight: "100px" }}
             className="rounded-circle" src={`${dish.image}`} alt="DishImg" />
           <Typography component="span" variant="h5" className="ms-3">{dish.title}</Typography>
         </Box>
-        {location === "/" && amount > 0 && (<Typography component="p" variant="h6">
-          <strong>X {amount}</strong>
+        {location === "/" && (<Typography component="p" variant="h6">
+          <strong>{}</strong>
         </Typography>)}
         <Typography component="p" variant="h6">
           <strong>{dish.price} KGS</strong>

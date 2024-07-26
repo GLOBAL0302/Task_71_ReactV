@@ -1,10 +1,10 @@
-import { IDishState } from '../types';
+import { ICartDishes, IDishState } from '../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchDishes } from './dishesThunk';
 
 export interface DishesState {
   dishes:IDishState[]
-  checkOutDishes: IDishState[]
+  checkOutDishes: ICartDishes[]
   fetchLoading:boolean
 }
 
@@ -19,7 +19,15 @@ export const dishesSlice = createSlice({
   initialState,
   reducers:{
     addToCart: (state,{payload})=>{
-      state.checkOutDishes.push(payload);
+      const index = state.checkOutDishes.findIndex((item)=>item.dish.id === payload.id);
+      if(index !== -1){
+        state.checkOutDishes[index].amount++;
+      }else{
+        state.checkOutDishes.push({
+          amount:1,
+          dish: payload
+        });
+      }
     }
   },
   extraReducers:(builder)=>{

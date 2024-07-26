@@ -5,6 +5,7 @@ import { selectDishes } from '../../store/dishesSlice';
 import Dish from './Dish';
 import { Box, Button } from '@mui/material';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import CheckOut from '../CheckOut/CheckOut';
 
 const Dishes = () => {
   const dispatch = useAppDispatch();
@@ -23,10 +24,16 @@ const Dishes = () => {
           dish={dish}
         />
       ))}
+      {isCartOpen && (<CheckOut open={isCartOpen} setOpen={setIsCartOpen} />)}
       <Box
         marginTop={2}
         textAlign="right">
-        <Button variant="contained" color="primary">CheckOut<ShoppingCartCheckoutIcon/></Button>
+        <Button
+          onClick={()=>setIsCartOpen(true)}
+          variant="contained"
+          color="primary"
+        >CheckOut<ShoppingCartCheckoutIcon/>
+        </Button>
       </Box>
     </>
   );
