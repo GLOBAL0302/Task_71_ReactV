@@ -39,9 +39,9 @@ const CheckOut: React.FC<Props> = ({ open, setOpen }) => {
     setOpen(false);
   };
 
-  const completeOrder = ()=>{
-    const allCartItems = checkOutDish.reduce<IOrderInfo>((acc, item)=>{
-       acc[item.dish.id] = item.amount;
+  const completeOrder = () => {
+    const allCartItems = checkOutDish.reduce<IOrderInfo>((acc, item) => {
+      acc[item.dish.id] = item.amount;
       return acc;
     }, {});
     dispatch(submitOrdersThunks(allCartItems));

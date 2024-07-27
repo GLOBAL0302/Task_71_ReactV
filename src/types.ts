@@ -13,17 +13,17 @@ export interface ICartDishes {
   amount: number;
 }
 
-export interface IOrderInfo{
-  [id:string]: number;
+export interface IOrderInfo {
+  [id: string]: number;
 }
 
 export interface ICsOrders {
-  [id:string]: IOrderInfo;
+  [id: string]: IOrderInfo;
 }
 
 export interface IAllOrders {
-  id: string
-  items: IOrderInfo[]
+  id: string;
+  items: IOrderInfo[];
 }
 
 export type IDishesApi = Omit<IDishState, 'id'>;

@@ -5,14 +5,14 @@ import { fetchCsOrders, fetchDishes, submitOrdersThunks } from './dishesThunk';
 export interface DishesState {
   dishes: IDishState[];
   checkOutDishes: ICartDishes[];
-  allOrders:IAllOrders[],
+  allOrders: IAllOrders[];
   fetchLoading: boolean;
 }
 
 const initialState: DishesState = {
   dishes: [],
   checkOutDishes: [],
-  allOrders:[],
+  allOrders: [],
   fetchLoading: false,
 };
 
@@ -45,17 +45,13 @@ export const dishesSlice = createSlice({
       });
 
     builder
-      .addCase(submitOrdersThunks.pending , state => {
-
-      })
+      .addCase(submitOrdersThunks.pending, (state) => {})
       .addCase(submitOrdersThunks.fulfilled, (state) => {
         state.checkOutDishes = [];
       });
 
     builder
-      .addCase(fetchCsOrders.pending, (state, { payload }) => {
-
-      })
+      .addCase(fetchCsOrders.pending, (state, { payload }) => {})
       .addCase(fetchCsOrders.fulfilled, (state, { payload }) => {
         state.allOrders = payload;
       });
@@ -63,10 +59,11 @@ export const dishesSlice = createSlice({
   selectors: {
     selectDishes: (state) => state.dishes,
     selectCheckOutDishes: (state) => state.checkOutDishes,
-    selectAllOrders:state => state.allOrders,
+    selectAllOrders: (state) => state.allOrders,
   },
 });
 
 export const dishesReducer = dishesSlice.reducer;
 export const { addToCart } = dishesSlice.actions;
-export const { selectDishes, selectCheckOutDishes,selectAllOrders } = dishesSlice.selectors;
+export const { selectDishes, selectCheckOutDishes, selectAllOrders } =
+  dishesSlice.selectors;

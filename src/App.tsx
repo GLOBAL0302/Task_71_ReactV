@@ -14,7 +14,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/admin" element={<HomePage />} />
         <Route path="/addDish" element={<AddDishForm />} />
-        <Route path="/csOrders" element={<CsOrders/>}/>
+        <Route path="/csOrders" element={<CsOrders />} />
         <Route path="/addDish/:id" element={<AddDishForm />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -4,7 +4,6 @@ import axiosApi from '../axiosApi';
 import { RootState } from '../app/store';
 import { idID } from '@mui/material/locale';
 
-
 export const fetchDishes = createAsyncThunk<
   IDishState[],
   void,
@@ -50,24 +49,35 @@ export const editDishThunk = createAsyncThunk<
   await axiosApi.put(`/dishes/${dish.id}.json`, changedDish);
 });
 
-export const submitOrdersThunks = createAsyncThunk<void, IOrderInfo, {state:RootState}>(
-  "dishes/submitOrders",
-  async(cartItems)=>{
-    await axiosApi.post(`/dishesOrders.json`, cartItems);
-  }
-);
+export const submitOrdersThunks = createAsyncThunk<
+  void,
+  IOrderInfo,
+  { state: RootState }
+>('dishes/submitOrders', async (cartItems) => {
+  await axiosApi.post(`/dishesOrders.json`, cartItems);
+});
 
-export const fetchCsOrders = createAsyncThunk<IAllOrders[], void, {state:RootState}>(
-  "dishes/fetchCsOrders",
-  async()=>{
-    const {data} = await axiosApi.get("dishesOrders.json");
-    let allOrders =[];
-    if(data){
-       allOrders = Object.keys(data).map(dishId=>({
-        id: dishId,
-         items: data[dishId]
-      }));
-      return allOrders;
-    }
+export const fetchCsOrders = createAsyncThunk<
+  IAllOrders[],
+  void,
+  { state: RootState }
+>('dishes/fetchCsOrders', async () => {
+  const { data } = await axiosApi.get('dishesOrders.json');
+  let allOrders = [];
+  if (data) {
+    allOrders = Object.keys(data).map((dishId) => ({
+      id: dishId,
+      items: data[dishId],
+    }));
+    return allOrders;
   }
-);
+  return allOrders;
+});
+
+export const deleteOrdersThunk = createAsyncThunk<
+  void,
+  string,
+  { state: RootState }
+>('dishes/deleteOrders', async (id) => {
+  await axiosApi.delete(`dishesOrders/${id}.json`);
+});
