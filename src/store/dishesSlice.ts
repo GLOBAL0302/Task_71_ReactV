@@ -33,6 +33,10 @@ export const dishesSlice = createSlice({
         });
       }
     },
+
+    deleteFromCart:(state,{payload}, )=>{
+      state.checkOutDishes = state.checkOutDishes.filter((item) => item.dish.id == payload.id);
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -64,6 +68,6 @@ export const dishesSlice = createSlice({
 });
 
 export const dishesReducer = dishesSlice.reducer;
-export const { addToCart } = dishesSlice.actions;
+export const { addToCart, deleteFromCart } = dishesSlice.actions;
 export const { selectDishes, selectCheckOutDishes, selectAllOrders } =
   dishesSlice.selectors;

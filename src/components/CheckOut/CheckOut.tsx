@@ -9,10 +9,10 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { Box, Divider, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectCheckOutDishes } from '../../store/dishesSlice';
+import { deleteFromCart, selectCheckOutDishes } from '../../store/dishesSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { IOrderInfo } from '../../types';
-import { submitOrdersThunks } from '../../store/dishesThunk';
+import { ICartDishes, IOrderInfo } from '../../types';
+import {submitOrdersThunks } from '../../store/dishesThunk';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -37,6 +37,11 @@ const CheckOut: React.FC<Props> = ({ open, setOpen }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const deleteItem = (dish:ICartDishes)=>{
+    dispatch(deleteFromCart(dish));
+    console.log(dish);
   };
 
   const completeOrder = () => {
@@ -84,7 +89,7 @@ const CheckOut: React.FC<Props> = ({ open, setOpen }) => {
                 <Typography component="p" variant="body2">
                   = {dish.amount * parseInt(dish.dish.price)} KGS
                 </Typography>
-                <DeleteIcon color="error" />
+                <DeleteIcon color="error" onClick={() => deleteItem(dish)} />
               </div>
             ))}
             <Typography textAlign="right" component="h3" variant="body1">
