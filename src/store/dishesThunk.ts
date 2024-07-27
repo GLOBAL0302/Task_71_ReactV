@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IAllOrders, IDishInput, IDishState, IOrderInfo } from '../types';
 import axiosApi from '../axiosApi';
 import { RootState } from '../app/store';
-import { idID } from '@mui/material/locale';
 
 export const fetchDishes = createAsyncThunk<
   IDishState[],
@@ -63,7 +62,7 @@ export const fetchCsOrders = createAsyncThunk<
   { state: RootState }
 >('dishes/fetchCsOrders', async () => {
   const { data } = await axiosApi.get('dishesOrders.json');
-  let allOrders = [];
+  let allOrders: IAllOrders[] = [];
   if (data) {
     allOrders = Object.keys(data).map((dishId) => ({
       id: dishId,

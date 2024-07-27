@@ -1,17 +1,16 @@
 import { IDishState } from '../../types';
 import { Box, Button, Paper, Typography } from '@mui/material';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { deleteDishThunk } from '../../store/dishesThunk';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import { addToCart, selectCheckOutDishes } from '../../store/dishesSlice';
 
 interface Props {
   dish: IDishState;
+  children: React.ReactNode;
 }
-const Dish: React.FC<Props> = ({ dish }) => {
+const Dish: React.FC<Props> = ({ dish, children }) => {
   const { pathname: location } = useLocation();
   const cartDishes = useAppSelector(selectCheckOutDishes);
   const currentAmount = cartDishes.filter((item) => item.dish.id === dish.id);
@@ -55,14 +54,7 @@ const Dish: React.FC<Props> = ({ dish }) => {
                 <EditNoteIcon />
               </Button>
             </NavLink>
-            <Button
-              onClick={() => dispatch(deleteDishThunk(dish))}
-              color={'error'}
-              variant="contained"
-            >
-              Delete
-              <DeleteIcon />
-            </Button>
+            {children}
           </Box>
         )}
       </Box>

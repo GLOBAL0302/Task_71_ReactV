@@ -1,5 +1,5 @@
 import { IOrderInfo } from '../../types';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../app/hooks';
 import { selectDishes } from '../../store/dishesSlice';
 import { Typography } from '@mui/material';
 

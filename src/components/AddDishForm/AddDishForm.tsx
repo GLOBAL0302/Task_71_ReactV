@@ -5,10 +5,11 @@ import { IDishInput, IDishState } from '../../types';
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { createDish, editDishThunk } from '../../store/dishesThunk';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { selectDishes } from '../../store/dishesSlice';
 
 const AddDishForm: React.FC = () => {
+  const navigate = useNavigate();
   let initialState: IDishInput = {
     title: '',
     price: '',
@@ -49,6 +50,8 @@ const AddDishForm: React.FC = () => {
     } else {
       dispatch(createDish(userInput));
     }
+
+    navigate('/admin');
   };
 
   return (
